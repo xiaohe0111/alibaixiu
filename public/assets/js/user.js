@@ -102,3 +102,27 @@ $('tbody').on('click', '.edit', function () {
     $('#btnAdd').hide()
     $('#btnEdit').show()
 })
+// 5,完成用户删除功能
+// 同样的利用事件委托的方法给del添加点击事件然后都数据进行删除
+$('tbody').on('click', '.del', function () {
+    // alert('ok')
+    // 获取到当前被点击元素的id
+    let id = $(this).attr('data-id')
+    // 然后判断是否进行删除
+    if (confirm('您真的要删除吗?')) {
+        // 那么就发送ajax请求
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + id,
+            success: function (res) {
+                // console.log(res)
+                // 通过索引号将要删除的元素从书中中找出来
+                let index = userArr.findIndex(item => item._id === res._id)
+                // 找到了之后调用数组的splice方法将这个数组元素删除
+                userArr.splice(index, 1)
+                // 再次调用render
+                render()
+            }
+        })
+    }
+})
