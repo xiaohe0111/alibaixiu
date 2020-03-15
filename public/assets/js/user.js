@@ -68,3 +68,37 @@ $('.btn').on('click', function () {
         }
     })
 })
+// 4,完成用户编辑功能
+var userId;
+// 给btnEdit添加点击事件对数据进行编辑 因为没一个tr是动态添加的所以我们需要用到事件委托进行处理
+$('tbody').on('click', '.edit', function () {
+    // alert('ok')
+    userId = $(this).attr('data-id');
+    console.log(userId);
+    // 修改相关内容
+    $('h2').html('编辑用户')
+    // 然后获取到当前被点击这一行数据的对应的头像邮箱昵称密码和是否激活和状态
+    let tr = $(this).parents('tr')
+    $('#previewImg').attr('src', tr.find('img').attr('src'))//获取到当前头像的地址
+    $('#hidden').val(tr.find('img').attr('src'))//获取到当前的头像
+    $('input[type="email"]').val(tr.children().eq(2).text());//获取到编辑用户数据的email
+    // 将这个输入框 设置为禁用
+    // $('input[name="email"]').prop('disabled', true).val(tr.children().eq(2).text());
+    $('input[name="nickName"]').val(tr.children().eq(3).text())//获取到编辑用户数据的昵称
+    // 将这个输入框 设置为禁用
+    // $('input[name="password"]').prop('disabled', true);
+    // 对status和role进行判断
+    if (tr.children().eq(4).text() == '激活') {
+        $('#status1').prop('checked', true)
+    } else {
+        $('#status0').prop('checked', true)
+    }
+    if (tr.children().eq(5).text() == '超级管理员') {
+        $('#admin').prop('checked', true)
+    } else {
+        $('#normal').prop('checked', true)
+    }
+    // 然后同时将添加按钮隐藏将编辑按钮显示
+    $('#btnAdd').hide()
+    $('#btnEdit').show()
+})
