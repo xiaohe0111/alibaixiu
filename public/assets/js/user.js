@@ -37,3 +37,34 @@ $('#avatar').on('change', function () {
         }
     })
 })
+// 3,完成用户添加功能
+// 给btn添加点击事件 
+$('.btn').on('click', function () {
+    // 要获取到用户输入的内容
+    let data = $('form').serialize()
+    // 发送ajax请求
+    $.ajax({
+        type: 'post',
+        url: '/users',
+        data: data,
+        success: function (res) {
+            console.log(res)
+            // 把输入的内容推送到数组中
+            userArr.push(res)
+            render()
+            // 将数据显示到页面中后, 要清空表单里面的内容
+            $('input[type="email"]').val('');//清空邮箱框
+            $('input[name="nickName"]').val('')//清空昵称框
+            $('input[name="password"]').val('')//清空密码框
+            $('#status0').prop('checked', false)//
+            $('#status1').prop('checked', false)//
+            $('admin').prop('checked', false)
+            $('normal').prop('checked', false)
+            $('hidden').val('')
+            $('#previewImg').attr('src', '../assets/img/default.png')//把头像图片改为原来默认的样子
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+})
