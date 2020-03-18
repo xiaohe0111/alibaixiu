@@ -1,7 +1,6 @@
 {
   "name": "alibaixiu",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "art-template": "^4.13.2",
     "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "express-formidable": "^1.2.0",
@@ -19,6 +19,9 @@
     "mongoose": "^5.3.9",
     "mongoose-query-random": "^1.0.1",
     "mongoose-sex-page": "^1.2.4",
-    "super-pagination": "^0.5.12"
-  }
+    "super-pagination": "^0.5.12",
+    "template": "^0.17.5"
+  },
+  "devDependencies": {},
+  "description": ""
 }
