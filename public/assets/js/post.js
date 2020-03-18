@@ -55,8 +55,11 @@ function render(cid, state, page = 1) {
 
 render(cid, state);
 
+var currentPage = 1
+
 // 分页 
 function changePage(index) {
+    currentPage = index
     render(cid, state, index)
 }
 
@@ -74,22 +77,27 @@ $.ajax({
 $('#search').on('click', function () {
     cid = $('#category').val();
     state = $('#state').val();
-    // 向服务器发送ajax请求 
-    // $.ajax({
-    //     type: 'get',
-    //     url: '/posts',
-    //     data: {
-    //         category: cid,
-    //         state: state
-    //     },
-    //     success: function (res) {
-    //         let html = template('pTpl', { data: res.records });
-    //         $('tbody').html(html);
-    //         // 还要调用 template方法 
-    //         let pageHtml = template('pageTpl', res);
-    // console.log(pageHtml)
-    //         $('.pagination').html(pageHtml);
-    //     }
-    // })
     render(cid, state)
 })
+
+
+// 完成文章的删除功能 
+
+$('tbody').on('click', '.del', function () {
+    let id = $(this).attr("data-id");
+
+    // console.log(currentPage);
+    // return;
+
+    if (confirm("你真的要删除吗?")) {
+        // 发送ajax请求 
+        $.ajax({
+            type: 'delete',
+            url: '/posts/' + id,
+            success: function (res) {
+                // 这里我们需要实现无刷新的功能   
+                render(cid, state, currentPage);
+            }
+        })
+    }
+});
