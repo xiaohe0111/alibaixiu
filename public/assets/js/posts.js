@@ -44,8 +44,7 @@ function changePage(index) {
     })
 
 }
-
-// 获取所有的文章分类 
+// 获取所有的文章分类
 $.ajax({
     type: 'get',
     url: '/categories',

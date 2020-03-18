@@ -46,7 +46,7 @@
             <option value="0">草稿</option>
             <option value="1">已发布</option>
           </select>
-          <button class="btn btn-default btn-sm" type="button" id="search"> 筛选</button>
+          <button class="btn btn-default btn-sm" type="button" id="search">筛选</button>
         </form>
         <ul class="pagination pagination-sm pull-right">
           <!-- <li><a href="#">上一页</a></li>
@@ -115,7 +115,8 @@
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
   <script src="../assets/vendors/art-template/template-web.js"></script>
-  <script src="../assets/js/posts.js"></script>
+  <!-- <script src="../assets/js/posts.js"></script> -->
+  <script src="../assets/js/post.js"></script>
   <script src="../assets/js/common.js"></script>
   <script type="text/html" id="pTpl">
   {{each data}}
@@ -126,8 +127,8 @@
     <td class="text-center">{{$value.createAt}}</td>
     <td class="text-center">{{$value.state == 0 ? '草稿' : '已发布'}}</td>
     <td class="text-center">
-      <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-      <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+      <a href="post-add.html?id={{@$value._id}}" class="btn btn-default btn-xs">编辑</a>
+      <a href="javascript:;" class="btn btn-danger btn-xs del">删除</a>
     </td>
   </tr>
   {{/each}}
@@ -135,23 +136,23 @@
 
   <!-- 准备分页页码的模板 -->
   <script type="text/html" id="pageTpl">
-    {{if page > 1}}
-    <li><a href="javascript:;" onclick="changePage({{page - 1}})">上一页</a></li>
-    {{/if}}
-    {{each display}}
-      <li class="{{$value === page ? 'active' : '' }}"><a href="javascript:;" onclick="changePage({{$value}})">{{$value}}</a></li>
-    {{/each}}
-    {{if page != pages}}
-    <li><a href="javascript:;" onclick="changePage({{page -0 + 1}})">下一页</a></li>
-    {{/if}}
-  </script>
+      {{if page > 1}}
+      <li><a href="javascript:;" onclick="changePage({{page - 1}})">上一页</a></li>
+      {{/if}}
+      {{each display}}
+        <li class="{{$value === page ? 'active' : '' }}"><a href="javascript:;" onclick="changePage({{$value}})">{{$value}}</a></li>
+      {{/each}}
+      {{if page != pages}}
+      <li><a href="javascript:;" onclick="changePage({{page -0 + 1}})">下一页</a></li>
+      {{/if}}
+    </script>
 
   <!-- 用于渲染分类的下拉菜单  -->
   <script type="text/html" id="cTpl">
-      {{each data}}
-        <option value="{{$value._id}}">{{$value.title}}</option>
-      {{/each}}
-    </script>
+    {{each data}}
+      <option value="{{$value._id}}">{{$value.title}}</option>
+    {{/each}}
+  </script>
   <script>NProgress.done()</script>
 
 </body>
