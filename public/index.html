@@ -350,7 +350,7 @@
         $('.swipe-wrapper').html(html);
 
 
-        var swiper = Swipe(document.querySelector('.swipe'), {
+        var swipe = Swipe(document.querySelector('.swipe'), {
           auto: 3000,
           transitionEnd: function (index) {
             // index++;
@@ -364,9 +364,9 @@
           var _this = $(this);
 
           if (_this.is('.prev')) {
-            swiper.prev();
+            swipe.prev();
           } else if (_this.is('.next')) {
-            swiper.next();
+            swipe.next();
           }
         })
       }
