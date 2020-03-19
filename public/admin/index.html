@@ -41,8 +41,8 @@
               <h3 class="panel-title">站点内容统计：</h3>
             </div>
             <ul class="list-group">
-              <li class="list-group-item"><strong>10</strong>篇文章（<strong>2</strong>篇草稿）</li>
-              <li class="list-group-item"><strong>6</strong>个分类</li>
+              <li class="list-group-item" id="post"></li>
+              <li class="list-group-item" id="category"></li>
               <li class="list-group-item"><strong>5</strong>条评论（<strong>1</strong>条待审核）</li>
             </ul>
           </div>
@@ -92,8 +92,33 @@
 
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
-  <script>NProgress.done()</script>
   <script src="../assets/js/common.js"></script>
+  <script>
+    // 获取文章的数量
+    // 向服务器发送ajax请求
+    $.ajax({
+      type: 'get',
+      url: '/posts/count',
+      success: function (res) {
+        console.log(res)
+        $('#post').html('<strong>' + res.postCount + '</strong>篇文章（<strong>' + res.draftCount + '</strong>篇草稿）')
+      }
+    })
+    // 获取分类的数量
+    $.ajax({
+      type: 'get',
+      url: '/categories/count',
+      success: function (res) {
+        console.log(res)
+        $('#category').html('<strong>' + res.categoryCount + '</strong>个分类')
+      }
+    })
+
+
+
+  </script>
+  <script>NProgress.done()</script>
+
 </body>
 
 </html>

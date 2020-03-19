@@ -96,7 +96,21 @@ $('tbody').on('click', '.del', function () {
             url: '/posts/' + id,
             success: function (res) {
                 // 这里我们需要实现无刷新的功能   
-                render(cid, state, currentPage);
+                // render(cid, state, currentPage);
+                // console.log($('tbody tr').length);
+                // 如果tbody标签下面的 tr只有一个了 我们就应该 去到上一页 
+                if ($('tbody tr').length == 1) {
+                    // 如果我们的当前页是第一页  我们就不需要让它跳到前一页
+                    if (currentPage == 1) {
+                        render(cid, state, currentPage);
+                    } else {
+                        render(cid, state, --currentPage);
+                    }
+
+                } else {
+                    // 这里我们需要实现无刷新的功能   
+                    render(cid, state, currentPage);
+                }
             }
         })
     }

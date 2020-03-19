@@ -124,7 +124,7 @@
     <td>{{$value.title}}</td>
     <td>{{$value.author.nickName}}</td>
     <td>{{$value.category.title}}</td>
-    <td class="text-center">{{$value.createAt}}</td>
+    <td class="text-center">{{$value.createAt && $value.createAt.substr(0,10)}}</td>
     <td class="text-center">{{$value.state == 0 ? '草稿' : '已发布'}}</td>
     <td class="text-center">
       <a href="post-add.html?id={{@$value._id}}" class="btn btn-default btn-xs">编辑</a>
