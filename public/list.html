@@ -1,3 +1,28 @@
+<script>
+  function getParams(key) {
+    //  我们首先获取浏览器地址栏上面的数数组 从?后面开始截取 使用&将其分隔为数组 
+    let params = location.search.substr(1).split('&');
+    // 遍历数组 
+    for (var i = 0; i < params.length; i++) {
+      // 因为数组元素 key=value这种形式 所以我们就字符串转换为数组元素 
+      let temp = params[i].split('=');
+
+      // temp是数组  它的0下标 
+      if (temp[0] === key) {
+        return temp[1]
+      }
+    }
+    return -1
+  }
+
+  let id = getParams('id')
+
+  if (id === -1) {
+    location.href = "index.html"
+  }
+
+</script>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -180,7 +205,7 @@
     </div>
     <div class="content">
       <div class="panel new">
-        <h3>会生活</h3>
+        <!-- <h3>会生活</h3>
         <div class="entry">
           <div class="head">
             <a href="detail.html">星球大战：原力觉醒视频演示 电影票68</a>
@@ -255,7 +280,7 @@
               <img src="uploads/hots_2.jpg" alt="">
             </a>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="footer">
@@ -265,6 +290,57 @@
   <script src="./assets/vendors/art-template/template-web.js"></script>
   <script src="./assets/vendors/jquery/jquery.min.js"></script>
   <script src="./assets/js/public.js"></script>
+  <script type="text/html" id="tpl">
+    <!-- 如果数组里面有元素  取数组下载为0这个元素的 内容 访问这个元素的category属性 再去访问 title属性 -->
+  <h3>{{data[0] && data[0].category.title}}</h3>
+
+  {{each data}}
+  <div class="entry">
+    <div class="head">
+      <span class="sort">{{$value.category.title}}</span>
+      <a href="detail.html?id={{@$value._id}}">{{$value.title}}</a>
+    </div>
+    <div class="main">
+      <p class="info">{{$value.author.nickName}} 发表于 {{$value.createAt && $value.createAt.substr(0,10)}}</p>
+      <p class="brief">
+        {{$value.content}}
+      </p>
+      <p class="extra">
+        <span class="reading">阅读({{$value.meta.views}})</span>
+        <span class="comment">评论({{$value.meta.comments}})</span>
+        <a href="javascript:;" class="like">
+          <i class="fa fa-thumbs-up"></i>
+          <span>赞({{$value.meta.likes}})</span>
+        </a>
+        <a href="javascript:;" class="tags">
+          分类：<span>{{$value.category.title}}</span>
+        </a>
+      </p>
+      <a href="detail.html?id={{@$value._id}}" class="thumb">
+        <img src="{{$value.thumbnail}}" alt="">
+      </a>
+    </div>
+  </div>
+  {{/each}}
+
+  </script>
+
+  <script>
+    // 发送ajax  
+    $.ajax({
+      type: 'get',
+      url: `/posts/category/${id}`,
+      success: function (res) {
+        console.log(res);
+        let html = template('tpl', { data: res });
+        // console.log(html);
+        $('.new').append(html);
+      }
+    })
+
+
+
+  </script>
 </body>
 
 </html>
